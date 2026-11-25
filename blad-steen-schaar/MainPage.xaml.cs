@@ -1,24 +1,86 @@
-﻿namespace blad_steen_schaar
+﻿
+namespace blad_steen_schaar;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    string spelerKeuze = "";
+    string botKeuze = "";
+
+    Random random = new Random();
+
+    public MainPage()
     {
-        int count = 0;
+        InitializeComponent();
+    }
 
-        public MainPage()
+    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (e.Value == true)
         {
-            InitializeComponent();
+            RadioButton gekozen = (RadioButton)sender;
+
+            spelerKeuze = gekozen.Content.ToString();
+
+            if (spelerKeuze == "Blad")
+            {
+                speler.Source = "blad.png";
+            }
+            else if (spelerKeuze == "Steen")
+            {
+                speler.Source = "steen.png";
+            }
+            else if (spelerKeuze == "Schaar")
+            {
+                speler.Source = "schaar.png";
+            }
         }
-        
-        private void OnCounterClicked(object? sender, EventArgs e)
+    }
+
+    private void Speel_Clicked(object sender, EventArgs e)
+    {
+        if (spelerKeuze == "")
         {
-            count++;
+            resultaat.Text = "Maak eerst een keuze!";
+        }
+        else
+        {
+            Controleer();
+        }
+    }
 
-            if (count == 1)
-                CounterBtn.Text = $"klik {count} keer";
-            else
-                CounterBtn.Text = $"klik {count} keer";
+    private void Controleer()
+    {
+        int getal = random.Next(1, 4);
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        if (getal == 1)
+        {
+            botKeuze = "Blad";
+            botnetmove.Source = "blad.png";
+        }
+        else if (getal == 2)
+        {
+            botKeuze = "Steen";
+            botnetmove.Source = "steen.png";
+        }
+        else
+        {
+            botKeuze = "Schaar";
+            botnetmove.Source = "schaar.png";
+        }
+
+        if (spelerKeuze == botKeuze)
+        {
+            resultaat.Text = "Gelijkspel!";
+        }
+        else if ((spelerKeuze == "Blad" && botKeuze == "Steen") ||
+                 (spelerKeuze == "Steen" && botKeuze == "Schaar") ||
+                 (spelerKeuze == "Schaar" && botKeuze == "Blad"))
+        {
+            resultaat.Text = "Je hebt gewonnen!";
+        }
+        else
+        {
+            resultaat.Text = "Je hebt verloren!";
         }
     }
 }
