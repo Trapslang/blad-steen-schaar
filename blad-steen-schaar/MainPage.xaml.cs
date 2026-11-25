@@ -8,15 +8,15 @@
         {
             InitializeComponent();
         }
-
+        
         private void OnCounterClicked(object? sender, EventArgs e)
         {
             count++;
 
             if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
+                CounterBtn.Text = $"klik {count} keer";
             else
-                CounterBtn.Text = $"Clicked {count} times";
+                CounterBtn.Text = $"klik {count} keer";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
